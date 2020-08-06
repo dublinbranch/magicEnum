@@ -21,8 +21,9 @@ template <typename E>
 
 } // namespace magic_enum
 
-// For integral types only:
 template <typename T>
+// [[nodiscard]] emette un warning se viene ignorato il valore ritornato della funzione
+//enable_if attiva se... la condizione è se T è un enum, e ritorna una QString
 [[nodiscard]] std::enable_if_t<std::is_enum_v<T>, QString> asString(T t) {
 	return magic_enum::enum_nameQS(t);
 }
