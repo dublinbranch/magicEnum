@@ -14,9 +14,15 @@ template <typename T>
 }
 
 template <typename E>
-QString enum_nameQS(E e) {
+[[nodiscard]] QString enum_nameQS(E e) {
 	std::string copy(magic_enum::enum_name(e));
 	return QString::fromStdString(copy);
 }
 
 } // namespace magic_enum
+
+// For integral types only:
+template <typename T>
+[[nodiscard]] std::enable_if_t<std::is_enum_v<T>, QString> asString(T t) {
+	return magic_enum::enum_nameQS(t);
+}
