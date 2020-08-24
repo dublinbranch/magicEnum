@@ -1,16 +1,17 @@
 #include "magic_enum.hpp"
 #include <QByteArray>
 #include <QString>
+#include <concepts>
 
 namespace magic_enum {
-template <typename T>
-[[nodiscard]] T enum_cast(const QByteArray& string) {
+template <typename T, typename K>
+[[nodiscard]] T cast(const K& string) {
 	return enum_cast<T>(string.toStdString()).value();
 }
 
-template <typename T>
-[[nodiscard]] T enum_cast(const QString& string) {
-	return enum_cast<T>(string.toStdString()).value();
+template <typename T, typename K>
+[[nodiscard]] T cast(const std::string& string) {
+	return enum_cast<T>(string).value();
 }
 
 template <typename E>
