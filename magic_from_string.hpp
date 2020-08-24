@@ -5,12 +5,12 @@
 
 namespace magic_enum {
 template <typename T, typename K>
-[[nodiscard]] T cast(const K& string) {
+[[nodiscard]] T fromString(const K& string) {
 	return enum_cast<T>(string.toStdString()).value();
 }
 
 template <typename T, typename K>
-[[nodiscard]] T cast(const std::string& string) {
+[[nodiscard]] T fromString(const std::string& string) {
 	return enum_cast<T>(string).value();
 }
 
