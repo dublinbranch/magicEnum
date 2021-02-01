@@ -20,7 +20,7 @@ std::string join(const Type& t) {
 }
 
 template <typename Type>
-std::string composeError(const std::string& key, Type en) {
+std::string composeError(const std::string& key, Type) {
 	auto& names      = magic_enum::enum_names<Type>();
 	auto  nameString = join(names);
 	return fmt::format("The key >>>{}<<< is not contained in the enum >>>{}<<<", key, nameString);
@@ -42,7 +42,7 @@ void fromString(const std::string& string, T& t) {
 	if (opt.has_value()) {
 		t = opt.value();
 	} else {
-		auto  msg         = composeError(string, t);
+		auto msg = composeError(string, t);
 		throw ExceptionV2(msg);
 	}
 }
