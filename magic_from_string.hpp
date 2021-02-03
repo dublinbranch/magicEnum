@@ -1,4 +1,5 @@
 #include "fmt/format.h"
+#include "fmt/ranges.h"
 #include "magic_enum.hpp"
 #include <QByteArray>
 #include <QStacker/qstacker.h>
@@ -7,23 +8,31 @@
 
 namespace magic_enum {
 template <typename Type>
-std::string join(const Type& t) {
-	std::string final;
-	auto        size = t.size();
-	for (uint i = 0; i < size; i++) {
-		final.append(t[i]);
-
-		if (i != size - 1)
-			final.append(" - ");
+std::vector<Type> getEnabled(const Type& t) {
+	static constexpr auto& values = magic_enum::enum_values<Type>();
+	std::vector<Type>      set;
+	for (const auto& c : values) {
+		using namespace bitwise_operators;
+		if (to_underlying(t & c)) {
+			set.push_back(c);
+		}
 	}
-	return final;
+	return set;
 }
 
 template <typename Type>
-std::string composeError(const std::string& key, Type) {
-	auto& names      = magic_enum::enum_names<Type>();
-	auto  nameString = join(names);
-	return fmt::format("The key >>>{}<<< is not contained in the enum >>>{}<<<", key, nameString);
+std::vector<std::string_view> asString(const std::vector<Type>& t) {
+	std::vector<std::string_view> res;
+	for (const auto& c : t) {
+		res.push_back(enum_name(c));
+	}
+	return res;
+}
+
+template <typename Type>
+std::string composeError(std::string_view key, Type) {
+	auto names = magic_enum::enum_names<Type>();
+	return fmt::format("The key >>>{}<<< is not contained in the enum >>>{}<<<", key, fmt::join(names, " - "));
 }
 
 template <typename T, typename K>
