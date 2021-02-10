@@ -2,7 +2,7 @@
 #include "fmt/ranges.h"
 #include "magic_enum.hpp"
 #include <QByteArray>
-#include <QStacker/qstacker.h>
+#include "QStacker/exceptionv2.h"
 #include <QString>
 #include <concepts>
 
