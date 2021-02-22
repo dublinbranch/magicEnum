@@ -1,3 +1,5 @@
+#pragma once
+
 #include "QStacker/exceptionv2.h"
 #include "fmt/format.h"
 #include "fmt/ranges.h"
