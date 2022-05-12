@@ -7,6 +7,7 @@
 #include <QByteArray>
 #include <QString>
 #include <concepts>
+#include <vector>
 
 namespace magic_enum {
 template <typename Type>
