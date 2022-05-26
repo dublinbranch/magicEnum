@@ -28,7 +28,7 @@ concept isBetterEnum = requires(const T& t) {
 
 template <typename Type>
 requires isBetterEnum<Type>
-    std::vector<Type> getEnabled(Type& t) {
+    std::vector<Type> getEnabledFromBitmask(Type& t) {
 	static const auto& values = t._values();
 	std::vector<Type>  set;
 	for (const auto& c : values) {
