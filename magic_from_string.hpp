@@ -38,23 +38,23 @@ std::string composeError(std::string_view key, Type) {
 	return fmt::format("The key >>>{}<<< is not contained in the enum >>>{}<<<", key, fmt::join(names, " - "));
 }
 
-template <typename T, typename K>
-[[nodiscard]] T fromString(const K& string) {
-	return enum_cast<T>(string.toStdString()).value();
-}
-
-template <typename T, typename K>
-[[nodiscard]] T fromString(const std::string& string) {
-	return enum_cast<T>(string).value();
+template <typename T>
+[[nodiscard]] T fromString(const QString& _string) {
+	return enum_cast<T>(_string.toStdString()).value();
 }
 
 template <typename T>
-void fromString(const std::string& string, T& t) {
-	auto opt = enum_cast<T>(string);
+[[nodiscard]] T fromString(const std::string& _string) {
+	return enum_cast<T>(_string).value();
+}
+
+template <typename T>
+void fromString(const std::string& _string, T& t) {
+	auto opt = enum_cast<T>(_string);
 	if (opt.has_value()) {
 		t = opt.value();
 	} else {
-		auto msg = composeError(string, t);
+		auto msg = composeError(_string, t);
 		throw ExceptionV2(msg);
 	}
 }
