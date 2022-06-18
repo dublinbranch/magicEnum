@@ -59,6 +59,11 @@ void fromString(const std::string& _string, T& t) {
 	}
 }
 
+template <typename T>
+void fromString(const QString& _string, T& t) {
+	fromString(_string.toStdString(), t);
+}
+
 template <typename E>
 [[nodiscard]] QString enum_nameQS(E e) {
 	std::string copy(enum_name(e));
